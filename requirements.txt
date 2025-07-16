@@ -1,0 +1,12 @@
+# core models & validation
+pydantic>=2.7          # pulls in pydantic‑core automatically, but you import it directly
+pydantic-core>=2.7
+
+# LLM wrapper (uses OpenAI under the hood)
+crewai>=0.2
+openai>=1.27           # only needed if you call OpenAI APIs directly
+
+# search + extraction
+ddgs>=0.4              # DuckDuckGo Search wrapper
+trafilatura>=1.6
+lxml>=5.2

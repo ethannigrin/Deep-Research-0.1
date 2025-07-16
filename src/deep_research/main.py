@@ -482,9 +482,6 @@ if __name__ == "__main__":
     
     
     research_plan, notes = research(user_prompt, plan_depth, search_depth, initial_messages)
-    for i in range(len(research_plan)):
-        print(f"Step {i+1}: {research_plan[i][0]}. Reason: {research_plan[i][1]}\n\n")
-        print(f"Notes:\n{parse_notes(notes[i])}\n\n")
     
     report = write_report(user_prompt, research_plan, notes)
     print(report)

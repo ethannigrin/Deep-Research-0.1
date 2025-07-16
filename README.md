@@ -91,4 +91,31 @@ Past attempts led to over‑exploration and irrelevant notes.
 Mitigation strategy: include well‑curated hyperlink examples in the training set and apply RL‑based reward shaping to discourage unnecessary link traversals while preserving the ability to dive deeper when justified.
 
 ## How to use
-Simply download the repository, navigate to the main file, install necessary libraries, insert your prompt in the main function, and run the file.
+
+1. **Clone the repo**
+
+    git clone https://github.com/ethannigrin/Deep-Research-0.1.git
+    cd Deep-Research-0.1
+
+2. **(Optional) create & activate a virtual environment**
+
+    python -m venv .venv
+    .venv\Scripts\activate          # Windows
+    source .venv/bin/activate       # macOS/Linux
+
+3. **Install dependencies**
+
+    pip install -r requirements.txt
+
+4. **Create a .env file with your OpenAI key**
+
+    echo "OPENAI_API_KEY=" > .env       # Windows
+    echo 'OPENAI_API_KEY=' > .env       # macOS/Linux
+
+5. **Add your prompt**
+
+    Open `main.py` and replace the `user_prompt` placeholder with your own text.
+
+6. **Run the program**
+
+    python main.py
