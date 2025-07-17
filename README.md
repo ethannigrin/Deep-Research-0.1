@@ -81,7 +81,8 @@ Let the assistant invoke the tool directly for each objective, rather than split
 Implementation path: adopt a ReACT‑style framework.  
 • Hand‑craft a small set of example dialogues showing the agent using the tool.  
 • Generate additional dialogues with an LLM.  
-• Train the assistant to use the tool via few‑shot prompting (augmented with RAG for example retrieval) or reinforcement learning.
+• Review dialogues for correctness.
+• Train the assistant to use the tool via few‑shot prompting (augmented with RAG for example retrieval) or supervised learning (cross-entropy loss, DPO).
 
 ### Controlled Hyperlink Exploration
 Enable the agent to follow in‑article hyperlinks when they promise valuable context.
