@@ -89,7 +89,7 @@ Enable the agent to follow in‑article hyperlinks when they promise valuable co
 
 Past attempts led to over‑exploration and irrelevant notes.
 
-Mitigation strategy: include well‑curated hyperlink examples in the training set and apply RL‑based reward shaping to discourage unnecessary link traversals while preserving the ability to dive deeper when justified.
+Mitigation strategy: include well‑curated hyperlink examples in the dataset of dialogues.
 
 ## How to use
 
