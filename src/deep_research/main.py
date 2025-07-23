@@ -15,9 +15,6 @@ from prompts import (
 )
 
 if __name__ == "__main__":
-    # user_prompt = "I want to learn about Alpha Evolve and how it works on a deep level."
-    # user_prompt = "I want a summary of the shw Smallville for seasons 1-4. I want detailed summary season by season. I dont care about the filler stuff (villain of the week) but want the character arcs"
-    # user_prompt = "I want to understand what a financial planner does. In detail, I want to understand how he/she takes a general ledger, does financial/data analysis, and presents this information"
     user_prompt = "I want to understand how PPO reinforcement learning works. I want to understand the formulation of policy gradients and how step by step we get to PPO"
 
     plan_depth = 8
