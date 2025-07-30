@@ -15,12 +15,7 @@ Plan revision – After every step, the assistant may adjust the remaining plan 
 
 Report writing – When all notes are gathered, the assistant drafts section titles, assigns relevant steps to each section, writes the body, and finally composes an introduction and a conclusion.
 
-## 2 | WHY AN EXPLICIT RESEARCH PLAN?
-Compared to Q&A loops: Some open‑source “deep‑research” agents collect information and follow up questions recursively, generating a tree of information. That works for narrow inquiries (e.g. “Are cats or dogs better pets?”) but fails for breadth‑heavy tasks (“List the 50 most debated political topics”). Furthermore, the Q&A style often drifts into niche, irrelevant sub‑questions.
-
-In the research plan approach, the assistant outputs a search query and reasoning behind the query for each step, forcing the LLM to think globally and stay relevant.
-
-## 3 | RESEARCH PIPELINE
+## 2 | RESEARCH PIPELINE
 **Step 1 — Search**  
 • For the current query the agent issues a DuckDuckGo request with the Google backend and captures only the first five results. This keeps noise low and ensures all URLs are high‑quality.
 
@@ -29,7 +24,7 @@ In the research plan approach, the assistant outputs a search query and reasonin
 
 **Step 3 — HTML → clean text**  
 • Each chosen URL is fetched and streamed through Trafilatura.  
-– Trafilatura consistently outperformed other open‑source extractors (e.g. readability.Document.summary), which often returned empty strings.  
+– Trafilatura consistently performed well at extracting text.  
 • The first 5 000 words of clean text are retained; anything beyond that is discarded to cap cost and context.
 
 **Step 4 — Chunking & note‑taking**  
@@ -39,10 +34,9 @@ In the research plan approach, the assistant outputs a search query and reasonin
 – outputs “…” to skip.  
 • Reading piece‑by‑piece yields richer, context‑preserved notes than sending the full article at once.  
 – Earlier RAG experiments with 600‑word retrievals often grabbed irrelevant fragments or stripped away context.  
-– RAG does excel at pinpoint facts < 300 words, but for broad‑topic note‑taking the straight block method proved superior.
 
 **Step 5 — Plan revision loop**  
-• After finishing a website (or abandoning it early), the agent decides whether to rewrite the remaining plan:  
+• After finishing a website, the agent decides whether to rewrite the remaining plan:  
 – If new insights suggest better queries, or if the previous step produced weak information, the tail of the plan is regenerated.  
 – Otherwise the agent proceeds unchanged.
 
@@ -55,14 +49,14 @@ In the research plan approach, the assistant outputs a search query and reasonin
 • Solution: break the report down into sections and progressively assemble a full, detail‑rich document.
 
 **Step 1 — Section titles**  
-• The LLM examines the complete research plan plus the accumulated notes and returns the sections for the report, not including the introduction and conclusion.
+• The LLM examines the complete research plan plus the accumulated notes and returns the sections titles for the report alongside section descriptions, not including the introduction and conclusion.
 
 **Step 2 — Step‑to‑section mapping**  
-• For each title the agent decides which research steps contain the most relevant material.  
+• For each title and associated description, the agent decides which research steps contain the most relevant material.  
 • Skipping this mapping overwhelms the model’s context window, causing key details to be overlooked.
 
 **Step 3 — Section drafting**  
-• The assistant receives the filtered notes and writes the section in a professional, detailed style.
+• The assistant receives the filtered notes and writes the section in a professional, detailed, and clear style.
 
 **Step 4 — Introduction and Conclusion**  
 • After the body is complete the agent sees the entire draft and composes an introduction and conclusion.
@@ -71,25 +65,19 @@ In the research plan approach, the assistant outputs a search query and reasonin
 • Titles, introduction, body sections, and conclusion are concatenated into the final report and returned to the user.
 
 ## 5 | FUTURE WORK
-### End‑to‑End Tool Integration
-Build a unified research tool that wraps DuckDuckGo search (Google backend) and Trafilatura extraction.
-
-Shift the plan from concrete search queries to abstract objectives (“Find recent peer‑reviewed papers on X”).
-
-Let the assistant invoke the tool directly for each objective, rather than splitting planning and execution.
-
-Implementation path: adopt a ReACT‑style framework.  
-• Hand‑craft a small set of example dialogues showing the agent using the tool.  
-• Generate additional dialogues with an LLM.  
-• Review dialogues for correctness.
-• Train the assistant to use the tool via few‑shot prompting (augmented with RAG for example retrieval) or supervised learning (cross-entropy loss, DPO).
-
 ### Controlled Hyperlink Exploration
-Enable the agent to follow in‑article hyperlinks when they promise valuable context.
+Enable the agent to follow in‑article hyperlinks when they promise valuable context. Past attempts led to over‑exploration and irrelevant notes.
 
-Past attempts led to over‑exploration and irrelevant notes.
+## 6 | ACKNOWLEDGEMENTS
+Deep Research 0.1 would not exist without the work of many open‑source developers and researchers who freely share their knowledge and code. In particular I thank:
 
-Mitigation strategy: include well‑curated hyperlink examples in the dataset of dialogues.
+• CrewAI – for its elegant agent‑orchestration framework, which makes multi‑step research pipelines easy to express.
+• Trafilatura – for consistently reliable HTML‑to‑text extraction that allows the pipeline to capture clean, context‑rich content from the web.
+• DuckDuckGo Search (Google backend) – for providing high‑quality search results that keep noise low and relevance high.
+• OpenAI’s o3‑mini model – whose strong reasoning ability and cost efficiency underpin plan generation, site selection, and report drafting.
+• LangChain’s “Open Deep Research” repository – whose prompt style, use of step‑wise tags, and detailed approaches served as a major design inspiration.
+
+Your generosity, ideas, and code made this project possible. Thank you.
 
 ## How to use
 
@@ -101,8 +89,12 @@ Mitigation strategy: include well‑curated hyperlink examples in the dataset of
 2. **(Optional) create & activate a virtual environment**
 
     python -m venv .venv
-    .venv\Scripts\activate          # Windows
-    source .venv/bin/activate       # macOS/Linux
+
+    Windows:
+    .venv\Scripts\activate
+    
+    macOS/Linux:
+    source .venv/bin/activate
 
 3. **Install dependencies**
 
@@ -110,8 +102,7 @@ Mitigation strategy: include well‑curated hyperlink examples in the dataset of
 
 4. **Create a .env file with your OpenAI key**
 
-    echo "OPENAI_API_KEY=" > .env       # Windows
-    echo 'OPENAI_API_KEY=' > .env       # macOS/Linux
+    echo "OPENAI_API_KEY=" > .env
 
 5. **Add your prompt**
 
@@ -120,3 +111,4 @@ Mitigation strategy: include well‑curated hyperlink examples in the dataset of
 6. **Run the program**
 
     python main.py
+
