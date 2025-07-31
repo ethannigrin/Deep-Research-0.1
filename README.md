@@ -43,7 +43,7 @@ Report writing – When all notes are gathered, the assistant drafts section tit
 **Step 6 — Iterate until done**  
 • The pipeline repeats for every plan step until notes are gathered for all queries.
 
-## 4 | REPORT‑GENERATION PIPELINE
+## 3 | REPORT‑GENERATION PIPELINE
 **Challenge**  
 • Using a single prompt with all notes caused the response to be short and miss key details.  
 • Solution: break the report down into sections and progressively assemble a full, detail‑rich document.
@@ -64,11 +64,7 @@ Report writing – When all notes are gathered, the assistant drafts section tit
 **Step 5 — Assembly**  
 • Titles, introduction, body sections, and conclusion are concatenated into the final report and returned to the user.
 
-## 5 | FUTURE WORK
-### Controlled Hyperlink Exploration
-Enable the agent to follow in‑article hyperlinks when they promise valuable context. Past attempts led to over‑exploration and irrelevant notes.
-
-## 6 | ACKNOWLEDGEMENTS
+## 4 | ACKNOWLEDGEMENTS
 Deep Research 0.1 would not exist without the work of many open‑source developers and researchers who freely share their knowledge and code. In particular I thank:
 
 • CrewAI – for its elegant agent‑orchestration framework, which makes multi‑step research pipelines easy to express.
